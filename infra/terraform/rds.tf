@@ -1,7 +1,3 @@
-############################################
-# RDS Postgres (private) for the lab
-############################################
-
 resource "aws_db_subnet_group" "postgres" {
   name       = "${var.project_name}-postgres-subnets"
   subnet_ids = [for s in aws_subnet.private : s.id]
@@ -23,7 +19,6 @@ resource "aws_security_group" "postgres" {
   }
 }
 
-# Allow Postgres only from the EKS cluster security group
 resource "aws_security_group_rule" "postgres_ingress_from_eks" {
   type                     = "ingress"
   security_group_id        = aws_security_group.postgres.id
